@@ -1,0 +1,8 @@
+//
+//  Production.xcconfig
+//  RickAndMorty
+//
+//  Created by Mahmoud Elattar on 10/03/2025.
+//
+
+BASE_URL = https:/$()/rickandmortyapi.com/api
