@@ -4,19 +4,18 @@
 import PackageDescription
 
 let package = Package(
-    name: "Networking",
-    platforms: [.iOS(.v15)],
+    name: "Domain",
     products: [
         .library(
-            name: "Networking",
-            targets: ["Networking"]),
+            name: "Domain",
+            targets: ["Domain"]),
     ],
     targets: [
         .target(
-            name: "Networking"),
+            name: "Domain"),
         .testTarget(
-            name: "NetworkingTests",
-            dependencies: ["Networking"]
+            name: "DomainTests",
+            dependencies: ["Domain"]
         ),
     ]
 )
