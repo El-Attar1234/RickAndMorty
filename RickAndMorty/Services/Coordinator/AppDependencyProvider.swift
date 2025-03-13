@@ -6,14 +6,38 @@
 //
 
 import SwiftUI
+import Networking
+import Domain
+import Data
 
 protocol AppDependencyProvider {
-    func makeCharactersListViewController() -> UIHostingController<CharactersListView>
+    func makeCharactersListViewController() -> UIHostingController<CharactersListView<DefaultCharactersViewModel>>
 }
 
 final class DefaultAppDependencyProvider: AppDependencyProvider {
     
-    func makeCharactersListViewController() -> UIHostingController<CharactersListView> {
-        return UIHostingController (rootView: CharactersListView())
+    private lazy var networkConfiguration: NetworkConfiguration = {
+        NetworkConfiguration(
+            baseURL: AppConfigurations.baseURL,
+            defaultHeaders: ["Content-Type": "application/json",
+                             "Accept": "application/json"]
+        )
+    }()
+    
+    func makeCharactersListViewController() -> UIHostingController<CharactersListView<DefaultCharactersViewModel>> {
+        let charactersViewModel = DefaultCharactersViewModel(charactersUseCase: makeCharactersUseCase())
+        return UIHostingController (rootView: CharactersListView(viewModel: charactersViewModel))
+    }
+    
+    private func makeCharactersUseCase() -> CharactersUseCase {
+        DefaultLCharactersUseCase(repository: makeCharactersRepository())
+    }
+    
+    private func makeCharactersRepository() -> CharactersRepository {
+        DefaultCharactersRepository(remoteDataSource: makeCharactersRemoteDataSource())
+    }
+    
+    private func makeCharactersRemoteDataSource() -> NetworkService {
+        DefaultNetworkService(config: networkConfiguration)
     }
 }

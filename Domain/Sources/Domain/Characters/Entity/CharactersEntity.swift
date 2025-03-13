@@ -22,7 +22,7 @@ public struct CharacterEntity {
     public let id: Int
     public let name: String
     public let image: String
-    public let status: CharacterStatus
+    public let status: String
     public let species: String
     public let gender: String
     
@@ -37,16 +37,8 @@ public struct CharacterEntity {
         self.id = id
         self.name = name
         self.image = image
-        self.status = CharacterStatus(rawValue: status) ?? .unknown
+        self.status = status
         self.species = species
         self.gender = gender
     }
-
-}
-
-//TODO: -  will move it
-public enum CharacterStatus: String {
-    case alive = "Alive"
-    case dead = "Dead"
-    case unknown = "unknown"
 }
