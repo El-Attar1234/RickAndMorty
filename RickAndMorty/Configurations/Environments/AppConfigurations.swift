@@ -12,6 +12,10 @@ public enum AppConfigurations {
         static let baseURL = "BASE_URL"
     }
     
+    private struct Constants {
+        static let safeBaseURLValue = "https://rickandmortyapi.com/api"
+    }
+    
     // MARK: - Plist
     private static let infoDictionary: [String: Any] = {
         guard let dict = Bundle.main.infoDictionary else { return ["" : ""] }
@@ -19,9 +23,9 @@ public enum AppConfigurations {
     }()
     
     // MARK: - Plist values
-    static let baseURL: URL? = {
-        guard let rootURLString = infoDictionary[Keys.baseURL] as? String else { return nil }
-        guard let url = URL(string: rootURLString) else { return nil }
+    static let baseURL: URL = {
+        guard let rootURLString = infoDictionary[Keys.baseURL] as? String,
+                let url = URL(string: rootURLString) else { return URL(string: Constants.safeBaseURLValue)! }
         return url
     }()
 }
