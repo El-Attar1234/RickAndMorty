@@ -17,6 +17,7 @@ protocol CharactersViewModel: ObservableObject {
     func applyFilter()
     func loadMoreCharacters()
     func viewOnDisappear()
+    func itemSelected(with character: CharacterPresentationModel)
 }
 
 final class DefaultCharactersViewModel: CharactersViewModel {
@@ -33,12 +34,15 @@ final class DefaultCharactersViewModel: CharactersViewModel {
     var isLoadingMore = false
     
     private let charactersUseCase: CharactersUseCase
+    private weak var delegate: CharactersDelegate?
     
     init(
         charactersUseCase: CharactersUseCase,
+        delegate: CharactersDelegate?,
         selectedCharacterStatus: CharacterStatus? = nil
     ) {
         self.charactersUseCase = charactersUseCase
+        self.delegate = delegate
         self.selectedCharacterStatus = selectedCharacterStatus
         
         fetchCharacters()
@@ -97,5 +101,9 @@ final class DefaultCharactersViewModel: CharactersViewModel {
             guard let self else { return }
             self.objectWillChange.send()
         }
+    }
+    
+    func itemSelected(with character: CharacterPresentationModel) {
+        delegate?.openCharacterDetails(with: character)
     }
 }
