@@ -5,7 +5,7 @@
 //  Created by Mahmoud Elattar on 10/03/2025.
 //
 
-import UIKit
+import SwiftUI
 
 protocol Coordinator {
     func start()
@@ -26,9 +26,17 @@ final class AppFlowCoordinator: Coordinator {
     }
     
     func start() {
-        let charactersListView = appDependencyProvider.makeCharactersListViewController()
+        let charactersListView = appDependencyProvider.makeCharactersListViewController(delegate: self)
         appNavigationController.pushViewController(charactersListView, animated: true)
         window?.rootViewController = appNavigationController
         window?.makeKeyAndVisible()
+    }
+}
+
+extension AppFlowCoordinator: CharactersDelegate {
+    func openCharacterDetails(with character: CharacterPresentationModel) {
+        let rootView = CharacterDetailsView(character: character)
+        let characterDetailsVC = UIHostingController(rootView: rootView)
+        appNavigationController.pushViewController(characterDetailsVC, animated: true)
     }
 }

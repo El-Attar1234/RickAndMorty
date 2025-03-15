@@ -11,7 +11,7 @@ import Domain
 import Data
 
 protocol AppDependencyProvider {
-    func makeCharactersListViewController() -> UIHostingController<CharactersListView<DefaultCharactersViewModel>>
+    func makeCharactersListViewController(delegate: CharactersDelegate?) -> UIHostingController<CharactersListView<DefaultCharactersViewModel>>
 }
 
 final class DefaultAppDependencyProvider: AppDependencyProvider {
@@ -24,8 +24,11 @@ final class DefaultAppDependencyProvider: AppDependencyProvider {
         )
     }()
     
-    func makeCharactersListViewController() -> UIHostingController<CharactersListView<DefaultCharactersViewModel>> {
-        let charactersViewModel = DefaultCharactersViewModel(charactersUseCase: makeCharactersUseCase())
+    func makeCharactersListViewController(delegate: CharactersDelegate?) -> UIHostingController<CharactersListView<DefaultCharactersViewModel>> {
+        let charactersViewModel = DefaultCharactersViewModel(
+            charactersUseCase: makeCharactersUseCase(),
+            delegate: delegate
+        )
         return UIHostingController (rootView: CharactersListView(viewModel: charactersViewModel))
     }
     
