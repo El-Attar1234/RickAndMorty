@@ -13,6 +13,7 @@ struct CharacterPresentationModel {
     let status: CharacterStatus
     let species: String
     let gender: String
+    let location: String
     
     init(character: CharacterEntity) {
         self.id = character.id
@@ -21,5 +22,6 @@ struct CharacterPresentationModel {
         self.status = CharacterStatus(rawValue: character.status) ?? .unknown
         self.species = character.species
         self.gender = character.gender
+        self.location = character.location
     }
 }
