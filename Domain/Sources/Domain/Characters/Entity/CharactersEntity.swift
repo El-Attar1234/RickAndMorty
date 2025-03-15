@@ -25,6 +25,7 @@ public struct CharacterEntity {
     public let status: String
     public let species: String
     public let gender: String
+    public let location: String
     
     public init(
         id: Int,
@@ -32,7 +33,8 @@ public struct CharacterEntity {
         image: String,
         status: String,
         species: String,
-        gender: String
+        gender: String,
+        location: String
     ) {
         self.id = id
         self.name = name
@@ -40,5 +42,6 @@ public struct CharacterEntity {
         self.status = status
         self.species = species
         self.gender = gender
+        self.location = location
     }
 }
