@@ -31,6 +31,7 @@ class CharactersTableViewController<ViewModel: CharactersViewModel>: UIViewContr
         tableView.dataSource = self
         tableView.delegate = self
         tableView.showsVerticalScrollIndicator = false
+        tableView.separatorStyle = .none
     }
     
     private func configureLayout() {
@@ -58,8 +59,9 @@ class CharactersTableViewController<ViewModel: CharactersViewModel>: UIViewContr
         let character = characters[indexPath.row]
         let view = CustomCharacterView(character: character)
         cell.configure(with: view)
-         // pagination
-        if indexPath.row == characters.count - 5 {
+        
+        // pagination
+        if indexPath.row == characters.count - 5 && !viewModel.isLoadingMore {
             viewModel.loadMoreCharacters()
         }
         
@@ -71,6 +73,8 @@ class CharactersTableViewController<ViewModel: CharactersViewModel>: UIViewContr
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Will navigate to character details")
+        if let character = characters[safeIndex: indexPath.row] {
+            viewModel.itemSelected(with: character)
+        }
     }
 }

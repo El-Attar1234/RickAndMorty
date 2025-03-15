@@ -19,9 +19,7 @@ struct CharactersTableViewRepresentable<ViewModel: CharactersViewModel>: UIViewC
         context: Context
     ) {
         DispatchQueue.main.async {
-            if uiViewController.view.window != nil {
-                uiViewController.update(with: viewModel)
-            }
+            uiViewController.update(with: viewModel)
         }
     }
 }

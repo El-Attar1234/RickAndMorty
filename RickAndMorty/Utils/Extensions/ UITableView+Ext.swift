@@ -20,7 +20,7 @@ public extension UITableView {
         for indexPath: IndexPath
     ) -> T {
         guard let cell = dequeueReusableCell(withIdentifier: type.className, for: indexPath) as? T  else {
-            fatalError("Can't dequeue cell")
+            return  UITableViewCell() as! T
         }
         return cell
     }

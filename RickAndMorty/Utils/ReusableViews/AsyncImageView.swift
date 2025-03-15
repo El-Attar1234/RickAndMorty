@@ -15,7 +15,7 @@ struct AsyncImageView: View {
             if let image = checkCache() {
                 Image(uiImage: image)
                     .resizable()
-                    .scaledToFit()
+                    .scaledToFill()
             } else {
                 AsyncImage(url: URL(string: url)) { phase in
                     switch phase {
@@ -24,13 +24,15 @@ struct AsyncImageView: View {
                     case .success(let image):
                         image
                             .resizable()
-                            .scaledToFit()
+                            .scaledToFill()
                             .onAppear {
                                 cacheImage(image: image)
                             }
                     case .failure:
-                        Rectangle()
-                            .fill(Color.gray.opacity(0.3))
+                        Image("subCardSquarePlaceHolder")
+                            .resizable()
+                            .scaledToFill()
+                        
                     @unknown default:
                         EmptyView()
                     }
