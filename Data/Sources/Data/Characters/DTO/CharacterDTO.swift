@@ -17,6 +17,7 @@ public struct CharacterDTO: Codable {
     public let episode: [String]?
     public let url: String?
     public let created: String?
+    public let location: LocationDTO?
     
     public func toDomain() -> CharacterEntity {
         CharacterEntity(
@@ -25,7 +26,8 @@ public struct CharacterDTO: Codable {
             image: image ?? "",
             status: status ?? "",
             species: species ?? "",
-            gender: gender ?? ""
+            gender: gender ?? "",
+            location: location?.name ?? ""
         )
     }
 }
